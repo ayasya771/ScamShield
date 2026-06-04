@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScamShield &mdash; is this text a scam?</title>
+  <meta name="description" content="Paste a text message and ScamShield tells you how likely it is to be a scam, and why.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+  <div class="page">
+
+    <header class="masthead">
+      <div class="brand">
+        <svg class="brand__logo" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/>
+          <path class="brand__check" d="m8.5 12 2.5 2.5 4.5-5" fill="none"/>
+        </svg>
+        <div>
+          <h1>ScamShield</h1>
+          <p class="brand__tag">Paste a suspicious text. Find out if it&rsquo;s a scam &mdash; and why.</p>
+        </div>
+      </div>
+      <dl class="trustbar" aria-label="About this model">
+        <div><dt>Learns from</dt><dd>{{ stats.messages }} messages</dd></div>
+        <div><dt>Catches</dt><dd>~{{ recall }}% of scams</dd></div>
+        <div><dt>Accuracy</dt><dd>~{{ accuracy }}%</dd></div>
+        <div><dt>Your data</dt><dd>stays on device</dd></div>
+      </dl>
+    </header>
+
+    <main>
+      <section class="card composer">
+        <label class="composer__label" for="message">The message you received</label>
+        <textarea id="message" rows="4"
+          placeholder="e.g. Royalmail: your parcel is waiting, pay a 1.99 fee at royal-mail-redelivery.top to reschedule"></textarea>
+        <div class="composer__actions">
+          <button id="check" class="btn btn--primary" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="btn__icon"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/></svg>
+            Check this message
+          </button>
+          <button id="clear" class="btn btn--ghost" type="button">Clear</button>
+          <span class="composer__hint">or press Ctrl + Enter</span>
+        </div>
+
+        <div class="examples">
+          <span class="examples__label">No message handy? Try one:</span>
+          <div id="examples" class="examples__chips"></div>
+        </div>
+      </section>
+
+      <section id="result" class="card result" hidden aria-live="polite">
+        <div class="verdict">
+          <div class="gauge" id="gauge">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="gauge__track" cx="60" cy="60" r="52"></circle>
+              <circle class="gauge__fill" id="gaugeFill" cx="60" cy="60" r="52"
+                      transform="rotate(-90 60 60)"></circle>
+            </svg>
+            <div class="gauge__num"><span id="riskNum">0</span><small>/100</small></div>
+          </div>
+          <div class="verdict__text">
+            <p class="verdict__eyebrow">Risk assessment</p>
+            <h2 id="verdictTitle">&nbsp;</h2>
+            <p id="verdictConfidence" class="verdict__confidence"></p>
+          </div>
+        </div>
+
+        <div class="echo">
+          <p class="echo__label">The message, with suspicious wording marked</p>
+          <p id="echo" class="echo__text"></p>
+        </div>
+
+        <div class="reasons">
+          <p class="reasons__label">Why ScamShield thinks so</p>
+          <ul id="reasons" class="reasons__list"></ul>
+        </div>
+
+        <div id="advice" class="advice"></div>
+
+        <div class="feedback">
+          <p class="feedback__q">Did ScamShield get it right? Teach it &mdash; it learns instantly.</p>
+          <div class="feedback__btns">
+            <button class="btn btn--mini btn--scam"  data-label="scam"  type="button">It&rsquo;s a scam</button>
+            <button class="btn btn--mini btn--legit" data-label="legit" type="button">It&rsquo;s genuine</button>
+          </div>
+          <p id="feedbackMsg" class="feedback__msg" role="status"></p>
+        </div>
+      </section>
+
+      <details class="card explainer">
+        <summary>How does ScamShield work?</summary>
+        <div class="explainer__body">
+          <p>
+            ScamShield uses <strong>naive Bayes</strong>, a classic machine-learning
+            method for sorting text. During training it reads hundreds of messages
+            already labelled <em>scam</em> or <em>genuine</em> and learns how often each
+            word, phrase and clue (a link, a money amount, a number to call) shows up in
+            each group.
+          </p>
+          <p>
+            When you paste a new message it adds up that evidence to estimate the
+            probability that the message is a scam &mdash; the same maths a spam filter
+            uses. Because every word carries its own weight, the model can show you
+            <em>which</em> words tipped the balance.
+          </p>
+          <p class="explainer__note">
+            It is a learning aid, not a guarantee. Scammers change tactics constantly, so
+            treat a &ldquo;genuine&rdquo; result as <em>&ldquo;no obvious red flags&rdquo;</em>
+            rather than a promise of safety. When money or codes are involved, always check
+            with the organisation directly.
+          </p>
+        </div>
+      </details>
+    </main>
+
+    <footer class="foot">
+      <p>A capstone project for the <a href="https://buildingai.elementsofai.com/" rel="noreferrer noopener" target="_blank">Building AI</a> course. Runs entirely on your own computer.</p>
+    </footer>
+  </div>
+
+  <script type="application/json" id="examplesData">{{ examples|tojson }}</script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

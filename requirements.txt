@@ -1,0 +1,8 @@
+# ScamShield dependencies.
+#
+# The detector itself (the scamshield package + cli.py) uses only the Python
+# standard library, so you can run the CLI with nothing installed.
+#
+# These are needed only for the extras:
+Flask>=2.2          # the web app  (app.py)
+matplotlib>=3.5     # the evaluation charts  (train.py)

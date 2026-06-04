@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+# Messages you teach the app at runtime are personal to you:
+data/user_examples.json
+_scratch_*.py
