@@ -249,17 +249,6 @@ scamshield/
 
 ---
 
-## Acknowledgments
-
-* Built for the **[Building AI](https://buildingai.elementsofai.com/)** course by
-  Reaktor and the University of Helsinki — this is my response to the final
-  *"Your AI idea"* exercise.
-* The naive Bayes approach and the text-similarity ideas behind the feature
-  extraction come directly from the course material.
-* The example messages are original, written by hand to mirror the structure of
-  scam texts reported publicly by banks, couriers and fraud-awareness campaigns.
-  Any resemblance to a specific real message is coincidental.
-
 ## A note on safety
 
 ScamShield is a learning project and a helper, **not** professional security
