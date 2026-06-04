@@ -1,5 +1,5 @@
 # 🛡️ ScamShield
-*"Is this text a scam?"*
+# *"Is this text a scam?"*
 
 ScamShield reads a text message and tells you **how likely it is to be a scam —
 and, just as importantly, why.** It is a small machine-learning model you can
